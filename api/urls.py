@@ -7,3 +7,5 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view() , name='login'),
     path('register/', UserCreateAPIView.as_view(), name='register'),
 ]
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
