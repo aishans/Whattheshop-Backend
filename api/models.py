@@ -1,6 +1,6 @@
 from django.db import models
 
-class ProductDetail(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=120)
     skin_color = models.CharField(max_length=120)
     blood_type = models.CharField(max_length=120)

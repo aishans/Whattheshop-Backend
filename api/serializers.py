@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import ProductDetail
+from .models import Product
 
 class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -19,11 +19,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 class ItemListSerialzer(serializers.ModelSerializer):
     class Meta:
-        model= ProductDetail
+        model= Product
         fields= ['name', 'image']
 
-class ProductDetailSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductDetail
+        model = Product
         fields = "__all__"
 
