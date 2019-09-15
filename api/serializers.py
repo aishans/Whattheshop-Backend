@@ -16,7 +16,14 @@ class UserCreateSerializer(serializers.ModelSerializer):
         new_user.save()
         return validated_data
 
+
+class ItemListSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model= ProductDetail
+        fields= ['name', 'image']
+
 class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductDetail
         fields = "__all__"
+
