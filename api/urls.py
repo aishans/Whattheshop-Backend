@@ -8,3 +8,7 @@ urlpatterns = [
     path('register/', UserCreateAPIView.as_view(), name='register'),
     path('api/items', ItemListView.as_view(), name='api-list'),
 ]
+
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
