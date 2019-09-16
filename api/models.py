@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Product(models.Model):
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120) 
     skin_color = models.CharField(max_length=120)
     blood_type = models.CharField(max_length=120)
     amputation_date = models.DateTimeField(auto_now_add=True)
@@ -15,8 +15,9 @@ class Cart(models.Model):
 
 class ProductCheckout(models.Model):
     quantity = models.IntegerField()
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="orders")
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    user= models.ForeignKey(User,on_delete=models.CASCADE, related_name="orders")
    
 # class User(models.Model):
 # 	username = models.CharField(max_length=120)
@@ -25,4 +26,8 @@ class ProductCheckout(models.Model):
 class Profile(models.Model):
     name = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True)
+    products = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+    def__str__(self):
+        return str(self.user)
 

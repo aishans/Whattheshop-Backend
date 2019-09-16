@@ -1,7 +1,7 @@
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, RetrieveUpdateAPIView
 from rest_framework.filters import SearchFilter,OrderingFilter
 from .serializers import *
-from .models import Product
+from .models import *
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
