@@ -17,9 +17,12 @@ class ProductCheckout(models.Model):
     quantity = models.IntegerField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    
+   
+# class User(models.Model):
+# 	username = models.CharField(max_length=120)
+# 	civil_ID = models.IntegerField()
 
- 
- 
-  
+class Profile(models.Model):
+    name = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, null=True)
 
