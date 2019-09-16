@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Product(models.Model):
     name = models.CharField(max_length=120)
@@ -7,14 +8,18 @@ class Product(models.Model):
     amputation_date = models.DateTimeField(auto_now_add=True)
     expiary_date = models.DateTimeField(auto_now_add=True)
     reason_for_amputation = models.TextField()
-    quantity = models.IntegerField()
     image = models.ImageField(blank=True, null=True)
-    # content = models.TextField()
-    # author = models.CharField(max_length=120)
+    
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.title
+class ProductCheckout(models.Model):
+    quantity = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    
 
-# class User(models.Model):
-# 	username = models.CharField(max_length=120)
-# 	civil_ID = models.IntegerField()
+ 
+ 
+  
+
