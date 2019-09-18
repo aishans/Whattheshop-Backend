@@ -16,6 +16,9 @@ class ItemListView(ListAPIView):
 
 class ProductCheckoutView(CreateAPIView):
     serializer_class = ProductCheckoutSerializer
+   
+    def perform_create(self, serializer):
+        serializer.save(cart=Cart.objects.get(user=self.request.user, cart_in_use=True))
 
 class ModifyProductCheckoutView(RetrieveUpdateAPIView):
     queryset = ProductCheckout.objects.all()
@@ -23,12 +26,17 @@ class ModifyProductCheckoutView(RetrieveUpdateAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
 
+class ProductDetailView(RetrieveAPIView):
+    queryset= Product.objects.get()
+    serializer_class= ProductSerializer
+
 class CartListView(ListAPIView):
     queryset = ProductCheckout.objects.all()
     serializer_class = ProductCheckoutSerializer
 
 class CartView(CreateAPIView):
     serializer_class = CartSerializer
+
 
 # class ModifyCartView(RetrieveUpdateAPIView):
 # 	serializer_class = CartSerializer
