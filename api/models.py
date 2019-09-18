@@ -9,9 +9,13 @@ class Product(models.Model):
     expiary_date = models.DateTimeField(auto_now_add=True)
     reason_for_amputation = models.TextField()
     image = models.ImageField(blank=True, null=True)
+
+
     
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cart_in_use= models.BooleanField(default=True)
+
 
 class ProductCheckout(models.Model):
     quantity = models.IntegerField()
@@ -24,10 +28,10 @@ class ProductCheckout(models.Model):
 # 	civil_ID = models.IntegerField()
 
 class Profile(models.Model):
-    name = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True)
-    products = models.ForeignKey(Product,on_delete=models.CASCADE)
+    # products = models.ForeignKey(Product,on_delete=models.CASCADE)
 
-    def__str__(self):
+    def __str__(self):
         return str(self.user)
 

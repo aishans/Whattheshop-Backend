@@ -19,15 +19,14 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
     past_orders= serializers.SerializerMethodField()
-    
     class Meta:
         model= Profile
-        fields=['name','products']
+        fields= "__all__"
+
     def get_past_orders(self,obj):
         user_obj = obj.user
-        order_list= user.orders.all()
-        order_list = ProductCheckout.objects.filter(user=user_obj)
-        return ProductSerializer(order_list, many=True).data
+        order_list= user_obj.orders.all().order_by('id')
+        return ProductCheckoutSerializer(order_list, many=True).data
 
 
 

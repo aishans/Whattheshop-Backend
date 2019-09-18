@@ -2,38 +2,53 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView,
 from rest_framework.filters import SearchFilter,OrderingFilter
 from .serializers import *
 from .models import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
 
 class ItemListView(ListAPIView):
-	queryset = Product.objects.all()
-	serializer_class = ItemListSerialzer
-	filter_backends = [SearchFilter, OrderingFilter,]
-	search_fields = ['name'] 
+    queryset = Product.objects.all()
+    serializer_class = ItemListSerialzer
+    filter_backends = [SearchFilter, OrderingFilter,]
+    search_fields = ['name'] 
 
 class ProductCheckoutView(CreateAPIView):
-	serializer_class = ProductCheckoutSerializer
+    serializer_class = ProductCheckoutSerializer
 
 class ModifyProductCheckoutView(RetrieveUpdateAPIView):
-	queryset = ProductCheckout.objects.all()
-	serializer_class = ModifyProductCheckoutSerializer
-	lookup_field = 'id'
-	lookup_url_kwarg = 'product_id'
+    queryset = ProductCheckout.objects.all()
+    serializer_class = ModifyProductCheckoutSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'product_id'
 
 class CartListView(ListAPIView):
-	queryset = ProductCheckout.objects.all()
-	serializer_class = ProductCheckoutSerializer
+    queryset = ProductCheckout.objects.all()
+    serializer_class = ProductCheckoutSerializer
 
 class CartView(CreateAPIView):
-	serializer_class = CartSerializer
+    serializer_class = CartSerializer
 
 # class ModifyCartView(RetrieveUpdateAPIView):
 # 	serializer_class = CartSerializer
 
 class DeleteProductCheckoutView(DestroyAPIView):
-	queryset = ProductCheckout.objects.all()
-	serializer_class = ModifyProductCheckoutSerializer
-	lookup_field = 'id'
-	lookup_url_kwarg = 'product_id'
+    queryset = ProductCheckout.objects.all()
+    serializer_class = ModifyProductCheckoutSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'product_id'
 
+class CartChange(APIView):
+    def get(self, request):
+        cart_current = Cart.objects.get(user=request.user, cart_in_use=True)
+        cart_current.cart_in_use = False
+        cart_current.save()
+        return Response({"status": "ok"})
+
+class OrderHistoryView(ListAPIView):
+    serializer_class = ProfileSerializer
+    # queryset = Cart.objects.filter(user=request.user, cart_in_use=False)
+    def get_queryset(self):
+        user = self.request.user
+        return Cart.objects.filter(user=user)
