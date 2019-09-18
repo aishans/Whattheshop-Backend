@@ -47,8 +47,7 @@ class CartChange(APIView):
         return Response({"status": "ok"})
 
 class OrderHistoryView(ListAPIView):
-    serializer_class = ProfileSerializer
+    serializer_class = CartDetailSerializer
     # queryset = Cart.objects.filter(user=request.user, cart_in_use=False)
     def get_queryset(self):
-        user = self.request.user
-        return Cart.objects.filter(user=user)
+        return Cart.objects.filter(user=self.request.user)

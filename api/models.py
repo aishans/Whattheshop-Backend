@@ -19,9 +19,9 @@ class Cart(models.Model):
 
 class ProductCheckout(models.Model):
     quantity = models.IntegerField()
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="orders")
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    user= models.ForeignKey(User,on_delete=models.CASCADE, related_name="orders")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="product_checkouts")
+    user= models.ForeignKey(User,on_delete=models.CASCADE)
    
 # class User(models.Model):
 # 	username = models.CharField(max_length=120)
