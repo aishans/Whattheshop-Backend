@@ -26,8 +26,8 @@ class ModifyProductCheckoutView(RetrieveUpdateAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
 
-class ProductDetailView(RetrieveAPIView):
-    queryset= Product.objects.get()
+class ProductDetailView(ListAPIView):
+    queryset= Product.objects.all()
     serializer_class= ProductSerializer
 
 class CartListView(ListAPIView):
@@ -47,15 +47,19 @@ class DeleteProductCheckoutView(DestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
 
-class CartChange(APIView):
+class CartChangeView(APIView):
     def get(self, request):
         cart_current = Cart.objects.get(user=request.user, cart_in_use=True)
         cart_current.cart_in_use = False
         cart_current.save()
+        new_cart = Cart.objects.create(user=request.user, cart_in_use=True)
         return Response({"status": "ok"})
+        
+        
+            
 
 class OrderHistoryView(ListAPIView):
     serializer_class = CartDetailSerializer
     # queryset = Cart.objects.filter(user=request.user, cart_in_use=False)
     def get_queryset(self):
-        return Cart.objects.filter(user=self.request.user)
+        return Cart.objects.filter(user=self.request.user, cart_in_use=False)

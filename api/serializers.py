@@ -45,7 +45,7 @@ class ProductSerializer1(serializers.ModelSerializer):
         model = Product
         fields = ['name','image']
 class ProductCheckoutSerializer(serializers.ModelSerializer):
-    product = ProductSerializer1()
+    # product = ProductSerializer1()
     class Meta:
         model= ProductCheckout
         fields= ['product','quantity']
