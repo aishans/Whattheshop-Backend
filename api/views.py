@@ -2,12 +2,12 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView,
 from rest_framework.filters import SearchFilter,OrderingFilter
 from .serializers import *
 from .models import *
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
 class ItemListView(ListAPIView):
     queryset = Product.objects.all()

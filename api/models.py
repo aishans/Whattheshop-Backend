@@ -9,12 +9,14 @@ class Product(models.Model):
     expiary_date = models.DateTimeField(auto_now_add=True)
     reason_for_amputation = models.TextField()
     image = models.ImageField(blank=True, null=True)
+    price  = models.IntegerField()
     
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class ProductCheckout(models.Model):
     quantity = models.IntegerField()
+    price  = models.IntegerField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
    

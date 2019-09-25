@@ -26,7 +26,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ItemListSerialzer(serializers.ModelSerializer):
     class Meta:
         model= Product
-        fields= ['name', 'image']
+        fields= ['name', 'image', 'price']
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,12 +36,12 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['name','image']
+        fields = ['name','image', 'price']
 class ProductCheckoutSerializer(serializers.ModelSerializer):
     product = ProductSerializer1()
     class Meta:
         model= ProductCheckout
-        fields= ['product','quantity']
+        fields= ['product','quantity', 'price']
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
