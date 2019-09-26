@@ -28,8 +28,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         order_list= user_obj.orders.all().order_by('user_id')
         return ProductCheckoutSerializer(order_list, many=True).data
 
-
-
 class ItemListSerialzer(serializers.ModelSerializer):
     class Meta:
         model= Product
