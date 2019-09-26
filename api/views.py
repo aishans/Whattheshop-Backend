@@ -2,17 +2,24 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView,
 from rest_framework.filters import SearchFilter,OrderingFilter
 from .serializers import *
 from .models import *
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+
+
+
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
-
+    permission_classes = [AllowAny]
+    
 class ItemListView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ItemListSerialzer
     filter_backends = [SearchFilter, OrderingFilter,]
     search_fields = ['name'] 
+
 
 class ProductCheckoutView(CreateAPIView):
     serializer_class = ProductCheckoutSerializer
@@ -20,23 +27,42 @@ class ProductCheckoutView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(cart=Cart.objects.get(user=self.request.user, cart_in_use=True))
 
+    permission_classes = [IsAuthenticated]
+
+class ProductCheckoutView(CreateAPIView):
+    serializer_class = ProductCheckoutSerializer
+    permission_classes = [IsAuthenticated]
+
+
 class ModifyProductCheckoutView(RetrieveUpdateAPIView):
     queryset = ProductCheckout.objects.all()
     serializer_class = ModifyProductCheckoutSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
 
+
 class ProductDetailView(ListAPIView):
     queryset= Product.objects.all()
     serializer_class= ProductSerializer
+
+    permission_classes = [IsAuthenticated]
+
 
 class CartListView(ListAPIView):
     queryset = ProductCheckout.objects.all()
     serializer_class = ProductCheckoutSerializer
 
+
 class CartView(CreateAPIView):
     serializer_class = CartSerializer
 
+
+
+    permission_classes = [IsAuthenticated]
+
+class CartView(CreateAPIView):
+    serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 # class ModifyCartView(RetrieveUpdateAPIView):
@@ -47,6 +73,7 @@ class DeleteProductCheckoutView(DestroyAPIView):
     serializer_class = ModifyProductCheckoutSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
+
 
 class CartChangeView(APIView):
     def get(self, request):
@@ -64,3 +91,6 @@ class OrderHistoryView(ListAPIView):
     # queryset = Cart.objects.filter(user=request.user, cart_in_use=False)
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user, cart_in_use=False)
+
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
