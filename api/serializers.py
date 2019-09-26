@@ -18,9 +18,16 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
+    past_orders= serializers.SerializerMethodField()
     class Meta:
         model= Profile
-        fields=['name',]
+        fields= "__all__"
+
+    def get_past_orders(self,obj):
+        user_obj = obj.user
+        order_list= user_obj.orders.all().order_by('user_id')
+        return ProductCheckoutSerializer(order_list, many=True).data
+
 
 
 class ItemListSerialzer(serializers.ModelSerializer):
@@ -38,7 +45,7 @@ class ProductSerializer1(serializers.ModelSerializer):
         model = Product
         fields = ['name','image', 'price']
 class ProductCheckoutSerializer(serializers.ModelSerializer):
-    product = ProductSerializer1()
+    # product = ProductSerializer1()
     class Meta:
         model= ProductCheckout
         fields= ['product','quantity', 'price']
@@ -47,6 +54,13 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = "__all__"
+
+class CartDetailSerializer(serializers.ModelSerializer):
+    product_checkouts = ProductCheckoutSerializer(many=True)
+    class Meta:
+        model = Cart
+        fields = "__all__"
+
 
 class ModifyProductCheckoutSerializer(serializers.ModelSerializer):
     class Meta:
