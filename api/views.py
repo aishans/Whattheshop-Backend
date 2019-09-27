@@ -91,5 +91,5 @@ class OrderHistoryView(ListAPIView):
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user, cart_in_use=False)
 
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated,]
 
