@@ -20,17 +20,11 @@ class Cart(models.Model):
     cart_in_use= models.BooleanField(default=True)
     total_price = models.DecimalField(max_digits=20, decimal_places=3)
 
-
 class ProductCheckout(models.Model):
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=3)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="product_checkouts")
-   
-   
-# class User(models.Model):
-# 	username = models.CharField(max_length=120)
-# 	civil_ID = models.IntegerField()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

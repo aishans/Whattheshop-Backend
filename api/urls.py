@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserCreateAPIView, ItemListView,CartListView, CartChangeView,ModifyProductCheckoutView,ProductDetailView, ProductCheckoutView,DeleteProductCheckoutView,OrderHistoryView
+from .views import UserCreateAPIView, ProfileView, ItemListView,CartListView, CartChangeView,ModifyProductCheckoutView,ProductDetailView, ProductCheckoutView,DeleteProductCheckoutView,OrderHistoryView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.conf.urls.static import static
 from django.conf import settings
@@ -16,6 +16,7 @@ urlpatterns = [
     path('product/delete/<int:product_id>/', DeleteProductCheckoutView.as_view(), name= "delete"),
     path('cart/checkout/', CartChangeView.as_view(), name="cart-checkout"),
     path('user/history/',OrderHistoryView.as_view(),name="order-history"), 
+    path('profile/', ProfileView.as_view(),name="profile"), 
 
 ]
 

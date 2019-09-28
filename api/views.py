@@ -54,15 +54,15 @@ class CartListView(ListAPIView):
 
 class CartView(CreateAPIView):
     serializer_class = CartSerializer
-
-
-
     permission_classes = [IsAuthenticated]
 
-class CartView(CreateAPIView):
-    serializer_class = CartSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+# class CartView(CreateAPIView):
+#     serializer_class = CartSerializer
+#     permission_classes = [IsAuthenticated, IsAdminUser]
 
+class ProfileView(CreateAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
 
 # class ModifyCartView(RetrieveUpdateAPIView):
 # 	serializer_class = CartSerializer
@@ -87,9 +87,10 @@ class CartChangeView(APIView):
 
 class OrderHistoryView(ListAPIView):
     serializer_class = CartDetailSerializer
+    permission_classes = [IsAuthenticated]
     # queryset = Cart.objects.filter(user=request.user, cart_in_use=False)
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user, cart_in_use=False)
 
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    
 
