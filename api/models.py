@@ -10,6 +10,8 @@ class Product(models.Model):
     reason_for_amputation = models.TextField()
     image = models.ImageField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=3)
+    background = models.ImageField(blank=True, null=True)
+
 
 class OrderHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
